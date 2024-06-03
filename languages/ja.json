@@ -16,12 +16,12 @@
       "ItemNoUses": "「{item}」は使用回数が無く、君は食べることができなかった。"
     },
     "FeatureNames": {
-      "ArcaneRecovery": "Arcane Recovery",
+      "ArcaneRecovery": "秘術回復",
       "NaturalRecovery": "Natural Recovery",
       "PowerSurge": "Power Surge",
       "SongOfRest": "休息の歌",
       "ChefFeat": "Chef",
-      "ChefTools": "Cook's Utensils",
+      "ChefTools": "調理用具",
       "PeriaptItem": "Periapt of Wound Closure",
       "WoundClosureBlessing": "Blessing of Wound Closure",
       "DurableFeat": "Durable",
@@ -38,16 +38,16 @@
       "CUB": "Combat Utility Belt"
     },
     "Fractions": {
-      "None": "None",
-      "Quarter": "Quarter",
-      "Half": "Half",
-      "Full": "Full",
+      "None": "なし",
+      "Quarter": "１／４",
+      "Half": "半分",
+      "Full": "最大",
       "Custom": "Custom Formula"
     },
     "RollFormula": {
-      "Normal": "Normal",
-			"Advantage": "Advantage",
-      "Maximized": "Maximized"
+      "Normal": "通常",
+			"Advantage": "有利",
+      "Maximized": "最大"
     },
     "Currencies": {
       "Copper": "cp",
@@ -57,13 +57,13 @@
       "Silver": "sp"
     },
     "Rounding": {
-      "RoundDown": "Round Down",
-      "RoundUp": "Round Up"
+      "RoundDown": "切り捨て",
+      "RoundUp": "切り上げ"
     },
     "Misc": {
-      "Food": "Food",
-      "Water": "Water",
-      "Both": "Both"
+      "Food": "食料",
+      "Water": "水",
+      "Both": "両方"
     },
     "NumberToText": {
       "1": "One",
