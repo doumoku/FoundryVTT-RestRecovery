@@ -4,22 +4,22 @@
       "Exhaustion": "Compendium.rest-recovery.exhaustion.JournalEntry.TqAqEUUR8LyEDi7q.JournalEntryPage.epHJRWnHvCPA8WKF"
     },
     "ClassNames": {
-      "Wizard": "Wizard",
-      "Druid": "Druid",
-      "Bard": "Bard"
+      "Wizard": "ウィザード",
+      "Druid": "ドルイド",
+      "Bard": "バード"
     },
     "Warnings": {
-      "PreventedLongRest": "You cannot long rest because you are under an effect that prevents you from doing so!",
-      "PreventedShortRest": "You cannot short rest because you are under an effect that prevents you from doing so!",
+      "PreventedLongRest": "君は妨害する効果の影響下にあるため、大休憩を行えない！",
+      "PreventedShortRest": "君は妨害する効果の影響下にあるため、小休憩を行えない！",
       "NotPromptedLongRest": "The GM has configured this game so you cannot start a long rest without being prompted!",
       "NotPromptedShortRest": "The GM has configured this game so you cannot start a short rest without being prompted!",
-      "ItemNoUses": "\"{item}\" has no more uses left, so you cannot consume it."
+      "ItemNoUses": "「{item}」は使用回数が無く、君は食べることができなかった。"
     },
     "FeatureNames": {
       "ArcaneRecovery": "Arcane Recovery",
       "NaturalRecovery": "Natural Recovery",
       "PowerSurge": "Power Surge",
-      "SongOfRest": "Song of Rest",
+      "SongOfRest": "休息の歌",
       "ChefFeat": "Chef",
       "ChefTools": "Cook's Utensils",
       "PeriaptItem": "Periapt of Wound Closure",
