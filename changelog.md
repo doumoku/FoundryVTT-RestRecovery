@@ -1,5 +1,18 @@
 # Rest Recovery Changelog
 
+## Version 1.11.4
+- Fixed bug when trying to prompt rest with non-actor tokens on the scene
+
+## Version 1.11.3
+- Fixed NPC rests when using Tidy (only from their sheet - still don't support adding them in a prompted rest)
+  - Due to improvements made to NPC actor data in dnd5e v3.2.0, NPCs should now mostly be able to benefit from the full Rest Recovery workflow; in dnd5e v3.1.x, however, NPC rests will simply use the core rest methods
+
+## Version 1.11.2
+- Actors with tokens on the viewed scene will now appear at the top of the rest prompt list dropdown
+- Selected actors for a rest prompt are now remembered across browsers
+  - The data will be stored on the user who prompts the rest, upon modifying the selected actors or initiating a rest from the prompt
+- Removed some deprecation warnings
+
 ## Version 1.11.1
 - Updated chat message flavor to reflect custom rest times
 
