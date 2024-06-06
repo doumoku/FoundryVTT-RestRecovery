@@ -79,37 +79,37 @@
     },
     "Chat": {
       "RegainedUses": "In addition, they recovered the following:",
-      "SpellSlotList": "{number} {level} level spell slot",
-      "SpellSlotListPlural": "{number} {level} level spell slots",
-      "RecoveryNameNum": "{name} regained {number} uses",
-      "SongOfRest": "{name} enjoys {bard}'s Song of Rest.",
-      "SongOfRestSelf": "{name} enjoys their own Song of Rest.",
-      "Chef": "{name} enjoys some delicious food from {chef}.",
-      "ChefSelf": "{name} enjoys their own delicious food.",
-      "ConsumedBothDayWorth": "{actorName} consumed {itemName} for a full day's worth of food and water.",
-      "ConsumedBoth": "{actorName} consumed {itemName} for {charges} units of food and water.",
-      "ConsumedFoodDayWorth": "{actorName} ate {itemName} for a full day's worth of food.",
+      "SpellSlotList": "{number}つの{level}レベル呪文スロット",
+      "SpellSlotListPlural": "{number}つの{level}レベル呪文スロット",
+      "RecoveryNameNum": "{name}の使用回数を{number}回復",
+      "SongOfRest": "{name}は{bard}の休息の歌をたのしんだ。",
+      "SongOfRestSelf": "{name}は己の休息の歌をたのしんだ。",
+      "Chef": "{name}は{chef}が作ったおいしい食事をたのしんだ。",
+      "ChefSelf": "{name}は自作のおいしい食事をたのしんだ。",
+      "ConsumedBothDayWorth": "{actorName}は{itemName}を摂取して丸一日分の食事と水分を得た。",
+      "ConsumedBoth": "{actorName}は{itemName}を摂取して{charges}単位の食事と水分を得た。",
+      "ConsumedFoodDayWorth": "{actorName}は{itemName}を食べて丸一日分の食事を得た。",
       "ConsumedFood": "{actorName} ate {itemName} for {charges} units of food.",
       "ConsumedWaterDayWorth": "{actorName} drank {itemName} for a full day's worth of water.",
       "ConsumedWater": "{actorName} drank {itemName} for {charges} units of water.",
       "RequiredSatedFood": "They require {units} units of food to be sated for the day.",
       "RequiredSatedWater": "They require {units} units of water to be sated for the day.",
-      "SatedFood": "They don't require any more food.",
-      "SatedWater": "They don't require any more water.",
+      "SatedFood": "これ以上の食事は必要ない。",
+      "SatedWater": "これ以上の水分は必要ない。",
       "FoodFullNone": "They ate enough of their own food to be sated.",
       "FoodHalfNone": "They ate of their own food, but only half of the amount that they needed.",
       "FoodHalfHalf": "They ate from an external source and of their own food to be sated.",
       "FoodNoneFull": "They ate enough food from an external source to be sated.",
       "FoodNoneHalf": "They ate from an external source, but only half of the amount that they needed.",
-      "FoodNoneNone": "They didn't eat anything.",
+      "FoodNoneNone": "何も食べなかった。",
       "WaterFullNone": "They drank enough of their own water to be sated.",
       "WaterHalfNone": "They drank of their own water, but only half of the amount that they needed.",
       "WaterHalfHalf": "They drank from an external source and of their own water to be sated.",
       "WaterNoneFull": "They drank enough water from an external source to be sated.",
       "WaterNoneHalf": "They drank from an external source, but only half of the amount that they needed.",
-      "WaterNoneNone": "They didn't drink anything.",
-      "NoExhaustion": "But they managed to avoid exhaustion.",
-      "Exhaustion": "Thus, they suffered {exhaustion} levels of exhaustion.",
+      "WaterNoneNone": "何も飲まなかった。",
+      "NoExhaustion": "しかし消耗状態は免れた。",
+      "Exhaustion": "そのため、{exhaustion}段階の消耗状態を受けた。",
       "ExhaustionDeath": "Regrettably, {actorName} reached {max_levels} levels of exhaustion and perished.",
       "ExhaustionArmor": "They chose to keep their armor on, and recovered none of their exhaustion.",
       "HitDiceArmor": "They recovered less hit dice than normal because they rested in their armor.",
@@ -119,8 +119,8 @@
       "CouldNotLongRest": "{actorName} could not take a long rest.",
       "CouldNotShortRest": "{actorName} could not take a short rest.", 
       "Flavor": {
-        "ShortRestNormal": "Short Rest ({duration} {units})",
-        "LongRestNormal": "Long Rest ({duration} {units})"
+        "ShortRestNormal": "小休憩 ({duration} {units})",
+        "LongRestNormal": "大休憩 ({duration} {units})"
       }
     },
     "Dialogs": {
@@ -131,15 +131,15 @@
         "Empty": "Your new profile cannot have an empty name"
       },
       "DiscardChanges": {
-        "Title": "Unsaved Changes",
+        "Title": "保存されていない変更",
         "Content": "You have unsaved changes to this profile. Are you sure you want to switch profile?"
       },
       "ResetDefaultChanges": {
-        "Title": "Reset default setting",
+        "Title": "デフォルトにリセット",
         "Content": "Are you sure you want to reset the \"Default\" module profile to its default values?"
       },
       "DeleteProfile": {
-        "Title": "Delete profile",
+        "Title": "プロファイルを削除",
         "Content": "Are you sure you want to delete the \"{profile}\" module profile?"
       },
       "QuickSetup": {
