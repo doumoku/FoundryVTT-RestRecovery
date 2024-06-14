@@ -20,7 +20,7 @@
       "NaturalRecovery": "Natural Recovery",
       "PowerSurge": "Power Surge",
       "SongOfRest": "休息の歌",
-      "ChefFeat": "Chef",
+      "ChefFeat": "調理師※要チェック",
       "ChefTools": "調理用具",
       "PeriaptItem": "Periapt of Wound Closure",
       "WoundClosureBlessing": "Blessing of Wound Closure",
@@ -28,8 +28,8 @@
       "BlackBloodFeature": "Black Blood Healing"
     },
     "OneDnDExhaustionEffect": {
-      "Name": "Exhaustion (One D&D)",
-      "Description": "With One D&D exhaustion, a creature suffers cumulative -1 penalties per level of exhaustion to all d20 rolls (attack rolls, ability checks, skill checks, and saving throws) and spell DCs. When a creature reaches 10 levels of exhaustion, they die."
+      "Name": "消耗 (One D&D)",
+      "Description": "One D&D版の消耗により、クリーチャーは消耗の段階ごとにすべてのd20ロール（攻撃ロール、能力値判定、技能判定、セーヴィング・スロー）と呪文DCに-1のペナルティを累積して受けます。10段階の消耗に到達した時、クリーチャーは死亡します。"
     },
     "PatchedRecovery": "{actorName}'s {recoveryName} has been patched.",
     "PatchedConsumable": "Updated {itemName} with uses.",
@@ -42,7 +42,7 @@
       "Quarter": "１／４",
       "Half": "半分",
       "Full": "最大",
-      "Custom": "Custom Formula"
+      "Custom": "カスタム式"
     },
     "RollFormula": {
       "Normal": "通常",
@@ -89,11 +89,11 @@
       "ConsumedBothDayWorth": "{actorName}は{itemName}を摂取して丸一日分の食事と水分を得た。",
       "ConsumedBoth": "{actorName}は{itemName}を摂取して{charges}単位の食事と水分を得た。",
       "ConsumedFoodDayWorth": "{actorName}は{itemName}を食べて丸一日分の食事を得た。",
-      "ConsumedFood": "{actorName} ate {itemName} for {charges} units of food.",
-      "ConsumedWaterDayWorth": "{actorName} drank {itemName} for a full day's worth of water.",
-      "ConsumedWater": "{actorName} drank {itemName} for {charges} units of water.",
-      "RequiredSatedFood": "They require {units} units of food to be sated for the day.",
-      "RequiredSatedWater": "They require {units} units of water to be sated for the day.",
+      "ConsumedFood": "{actorName}は{itemName}を食べて{charges}単位の食事を得た。",
+      "ConsumedWaterDayWorth": "{actorName}は{itemName}を飲んで丸一日分の水分を得た。",
+      "ConsumedWater": "{actorName}は{itemName}を飲んで{charges}単位の水分を得た。",
+      "RequiredSatedFood": "１日分満腹になるまで{units}単位の食事が必要だ。",
+      "RequiredSatedWater": "１日分満腹になるまで{units}単位の水分が必要だ。",
       "SatedFood": "これ以上の食事は必要ない。",
       "SatedWater": "これ以上の水分は必要ない。",
       "FoodFullNone": "They ate enough of their own food to be sated.",
@@ -110,14 +110,14 @@
       "WaterNoneNone": "何も飲まなかった。",
       "NoExhaustion": "しかし消耗状態は免れた。",
       "Exhaustion": "そのため、{exhaustion}段階の消耗状態を受けた。",
-      "ExhaustionDeath": "Regrettably, {actorName} reached {max_levels} levels of exhaustion and perished.",
-      "ExhaustionArmor": "They chose to keep their armor on, and recovered none of their exhaustion.",
-      "HitDiceArmor": "They recovered less hit dice than normal because they rested in their armor.",
-      "NoHitDiceArmor": "They recovered none of their hit dice because they rested in their armor.",
-      "HitDiceNoArmor": "They chose to not rest in their armor, and regained the normal amount of hit dice.",
-      "PreventedHitDiceRecovery": "Because they spent hit dice during the long rest, they recovered no hit dice.",
-      "CouldNotLongRest": "{actorName} could not take a long rest.",
-      "CouldNotShortRest": "{actorName} could not take a short rest.", 
+      "ExhaustionDeath": "残念ながら、{actorName}は{max_levels}段階の消耗に到達し、息を引き取った。",
+      "ExhaustionArmor": "鎧を身に着ていることに決め、消耗を回復できなかった。",
+      "HitDiceArmor": "鎧を着たまま休んだので、通常より少ない量のヒット・ダイスを回復した。",
+      "NoHitDiceArmor": "鎧を着たまま休んだので、１つもヒット・ダイスを回復できなかった。",
+      "HitDiceNoArmor": "鎧を脱いで休憩をとり、通常分ヒット・ダイスを回復した。",
+      "PreventedHitDiceRecovery": "大休憩時にヒット・ダイスを使用したため、ヒット・ダイスは回復しなかった。",
+      "CouldNotLongRest": "{actorName}は大休憩がとれなかった。",
+      "CouldNotShortRest": "{actorName}は小休憩がとれなかった。", 
       "Flavor": {
         "ShortRestNormal": "小休憩 ({duration} {units})",
         "LongRestNormal": "大休憩 ({duration} {units})"
@@ -158,8 +158,8 @@
       "PromptRest": {
         "Title": "Prompt Rest For Players",
         "ConfigureProfiles": "Configure Profiles",
-        "Short": "Short Rest",
-        "Long": "Long Rest",
+        "Short": "小休憩",
+        "Long": "大休憩",
         "NewDayTitle": "New Day",
         "NoNewDayTitle": "Not A New Day",
         "NewDayHint": "This causes characters who finish the rest to recover abilities that recharge on a \"per day\" basis.",
@@ -546,16 +546,16 @@
           "Hint": "The fraction of hit dice to recover on a long rest."
         },
         "HitDiceRecoveryRounding": {
-          "Title": "Hit dice recovery rounding",
-          "Hint": "How to round the number of hit dice recovered."
+          "Title": "ヒット・ダイス回復の端数処理",
+          "Hint": "ヒット・ダイスが回復するときの端数処理を定義します。"
         },
         "ResourcesRecoveryFraction": {
           "Title": "Resources recovery fraction",
           "Hint": "The fraction of resources to recover on a long rest."
         },
         "SpellSlotsRecoveryFraction": {
-          "Title": "Spell slots recovery fraction",
-          "Hint": "The fraction of spell slots to recover on a long rest."
+          "Title": "呪文スロット回復量",
+          "Hint": "大休憩時の呪文スロット回復量。"
         },
         "CustomSpellSlotRecovery": {
           "Title": "Enable spell slot point-like recovery rule",
