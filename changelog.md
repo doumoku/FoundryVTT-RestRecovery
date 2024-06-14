@@ -1,5 +1,11 @@
 # Rest Recovery Changelog
 
+## Version 1.12.0
+- Added option to allow Song of Rest to roll with _every_ short rest hit die rolled, rather than only the first
+
+## Version 1.11.5
+- Fixed a bug which sometimes prevented Midi QOL from opening its troubleshooter
+
 ## Version 1.11.4
 - Fixed bug when trying to prompt rest with non-actor tokens on the scene
 
