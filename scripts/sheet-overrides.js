@@ -91,6 +91,7 @@ function patch_actorSheet(app, html, data) {
       ResourceConfig.show({ actor });
     });
   } else if (app.options.classes.includes("dnd5e2")) {
+    if (!html.hasClass("editable")) return;
     let targetElem = html.find(".favorites")[0];
     if (!targetElem) return;
     let border = false;
@@ -202,6 +203,8 @@ function patch_tidyItemConsumableInputs(element, item) {
 }
 
 function patch_itemCustomRecovery(app, html, item) {
+  let usesElem = html.find('[name="system.uses.per"]')?.[0];
+  if (!usesElem || !['sr', 'lr', 'day'].includes(usesElem.value)) return;
   let targetElem = html.find(".uses-per")?.[0];
   if (!targetElem) return;
   $(getCustomRecoveryHtml(item)).insertAfter(targetElem);
@@ -214,6 +217,8 @@ function patch_tidyItemCustomRecovery(element, item) {
       ${getCustomRecoveryHtml(item)}
     </div>
   `;
+  let usesElem = html.find('[data-tidy-field="system.uses.per"]')?.[0];
+  if (!usesElem || !['sr', 'lr', 'day'].includes(usesElem.value)) return;
   let targetElem = html.find(".uses-per")?.[0];
   if (!targetElem) return;
   $(markupToInject).insertAfter(targetElem);

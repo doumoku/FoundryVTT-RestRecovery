@@ -208,19 +208,37 @@ export default class RestWorkflow {
       if (getSetting(CONSTANTS.SETTINGS.REST_VARIANT) === "custom") {
         config.duration = (getSetting(CONSTANTS.SETTINGS.CUSTOM_SHORT_REST_DURATION_HOURS) ?? 1) * 60;
       }
+
+      let workflow = RestWorkflow.make(actor, false, config);
       
       if (!config.dialog) return true;
 
       if (foundry.utils.isNewerVersion('3.2.0', game.system.version) && actor.type === "npc") return true;
       
-      RestWorkflow.make(actor, false, config).then(() => {
+      workflow.then((workflow) => {
   
         const hd0 = actor.system.attributes.hd;
         const hp0 = actor.system.attributes.hp.value;
   
-        ShortRestDialog.show({ ...config, actor }).then((newDay) => {
+        ShortRestDialog.show({ ...config, actor }).then(async (newDay) => {
   
           config.newDay = newDay;
+
+          if (workflow._shouldRollForFoodWaterExhaustion()) {
+  
+            const halfWaterSaveDC = lib.getSetting(CONSTANTS.SETTINGS.HALF_WATER_SAVE_DC);
+  
+            workflow.exhaustionRoll = await actor.rollAbilitySave("con", {
+              targetValue: halfWaterSaveDC,
+              fastForward: false
+            });
+            if (!workflow.exhaustionRoll) {
+              workflow.exhaustionRoll = await actor.rollAbilitySave("con", {
+                targetValue: halfWaterSaveDC,
+                fastForward: true
+              });
+            }
+          }
   
           const dhd = actor.type === 'npc' ? (actor.system.attributes.hd.value - hd0.value) : (actor.system.attributes.hd - hd0);
           const dhp = actor.system.attributes.hp.value - hp0;
@@ -249,11 +267,13 @@ export default class RestWorkflow {
         config.duration = (getSetting(CONSTANTS.SETTINGS.CUSTOM_LONG_REST_DURATION_HOURS) ?? 1) * 60;
       }
 
+      let workflow = RestWorkflow.make(actor, true, config);
+
       if (!config.dialog) return true;
 
       if (foundry.utils.isNewerVersion('3.2.0', game.system.version) && actor.type === "npc") return true;
 
-      RestWorkflow.make(actor, true, config).then((workflow) => {
+      workflow.then((workflow) => {
         LongRestDialog.show({ ...config, actor }).then(async (newDay) => {
   
           config.newDay = newDay;
@@ -286,6 +306,13 @@ export default class RestWorkflow {
     Hooks.on("dnd5e.restCompleted", async (actor, results) => {
       await actor.deleteEmbeddedDocuments("Item", results?.deleteItems ?? [], { isRest: true });
       await actor.createEmbeddedDocuments("Item", results?.createItems ?? [], { isRest: true });
+      if (game.modules.get('magicitems')?.api && game.modules.get('magicitems').api.execActorLongRest) {
+        if (results.longRest) {
+          game.modules.get('magicitems').api.execActorLongRest(actor, results.newDay);
+        } else {
+          game.modules.get('magicitems').api.execActorShortRest(actor, results.newDay);
+        }
+      }
     });
 
     this._setupFoodListeners();
@@ -355,8 +382,8 @@ export default class RestWorkflow {
       {
         title: "REST-RECOVERY.Dialogs.RestSteps.FoodWater.Title",
         required: lib.getSetting(CONSTANTS.SETTINGS.ENABLE_FOOD_AND_WATER)
-          && (this.longRest || this.restVariant === "gritty")
-          && (this.foodWaterRequirement.actorRequiredFood > 0 || this.foodWaterRequirement.actorRequiredWater > 0),
+          && (this.foodWaterRequirement.actorRequiredFood > 0 || this.foodWaterRequirement.actorRequiredWater > 0)
+          && (lib.getSetting(CONSTANTS.SETTINGS.FOODWATER_PROMPT_NEWDAY) ? this.config.newDay : (this.longRest || this.restVariant === "gritty")),
         component: FoodWater
       },
       {
@@ -701,7 +728,8 @@ export default class RestWorkflow {
       await roll.toMessage({
         flavor: game.i18n.format("REST-RECOVERY.Chat.SongOfRest" + (isOwnBard ? "Self" : ""), {
           name: this.actor.name,
-          bard: this.features.bard.name
+          bard: this.features.bard.name,
+          songOfRestName: lib.getSetting(CONSTANTS.SETTINGS.SONG_OF_REST, true)
         }),
         speaker: ChatMessage.getSpeaker({ actor: this.actor })
       });
@@ -992,11 +1020,15 @@ export default class RestWorkflow {
 
   _shouldRollForFoodWaterExhaustion() {
 
-    if (!(this.longRest || this.restVariant === "gritty")) return false;
-
     if (!lib.getSetting(CONSTANTS.SETTINGS.ENABLE_FOOD_AND_WATER)) return false;
-
+    
     if (!lib.getSetting(CONSTANTS.SETTINGS.AUTOMATE_FOODWATER_EXHAUSTION)) return false;
+
+    if (lib.getSetting(CONSTANTS.SETTINGS.FOODWATER_PROMPT_NEWDAY)) {
+      if (!this.config.newDay) return false;
+    } else if (!(this.longRest || this.restVariant === "gritty")) {
+      return false;
+    }
 
     const halfWaterSaveDC = lib.getSetting(CONSTANTS.SETTINGS.HALF_WATER_SAVE_DC);
 
@@ -1036,8 +1068,18 @@ export default class RestWorkflow {
   }
 
   async _handleExhaustion(results) {
+    let foodWaterPromptNewday = lib.getSetting(CONSTANTS.SETTINGS.FOODWATER_PROMPT_NEWDAY);
+    let automateFoodwaterExhaustion = lib.getSetting(CONSTANTS.SETTINGS.AUTOMATE_FOODWATER_EXHAUSTION);
+    let shouldDoFoodWater =
+      (this.longRest && // Long rest:
+        ((foodWaterPromptNewday && this.config.newDay) || // Prompt new day & is new day?
+        !foodWaterPromptNewday) // No prompt new day - default is yes
+      ) ||
+      (!this.longRest && // Short rest:
+        (foodWaterPromptNewday && this.config.newDay) // Prompt new day & is new day
+      );
 
-    if (!(this.longRest || this.restVariant === "gritty")) return;
+    if (!(this.longRest || this.restVariant === "gritty") && !shouldDoFoodWater) return;
 
     let actorInitialExhaustion = foundry.utils.getProperty(this.actor, "system.attributes.exhaustion") ?? 0;
     let actorExhaustion = actorInitialExhaustion;
@@ -1045,7 +1087,7 @@ export default class RestWorkflow {
     let exhaustionSave = false;
     let exhaustionToRemove = 1;
 
-    if (lib.getSetting(CONSTANTS.SETTINGS.ENABLE_FOOD_AND_WATER)) {
+    if (lib.getSetting(CONSTANTS.SETTINGS.ENABLE_FOOD_AND_WATER) && this.config.dialog && shouldDoFoodWater) {
 
       let {
         actorRequiredFood,
@@ -1103,7 +1145,7 @@ export default class RestWorkflow {
 
         actorFoodSatedValue = Math.min(actorRequiredFood, actorFoodSatedValue);
 
-        if (lib.getSetting(CONSTANTS.SETTINGS.AUTOMATE_FOODWATER_EXHAUSTION)) {
+        if (automateFoodwaterExhaustion) {
 
           if (actorFoodSatedValue <= (actorRequiredFood / 2)) {
             exhaustionToRemove = 0;
@@ -1162,7 +1204,7 @@ export default class RestWorkflow {
 
         actorWaterSatedValue = Math.min(actorRequiredWater, actorWaterSatedValue);
 
-        if (actorWaterSatedValue < actorRequiredWater && lib.getSetting(CONSTANTS.SETTINGS.AUTOMATE_FOODWATER_EXHAUSTION)) {
+        if (actorWaterSatedValue < actorRequiredWater && automateFoodwaterExhaustion) {
           if (actorWaterSatedValue < (actorRequiredWater / 2)) {
             actorExhaustion += actorExhaustion > 0 ? 2 : 1;
             exhaustionGain = true;
@@ -1187,7 +1229,7 @@ export default class RestWorkflow {
 
     }
 
-    if (this.longRest && lib.getSetting(CONSTANTS.SETTINGS.AUTOMATE_EXHAUSTION)) {
+    if ((this.longRest || (shouldDoFoodWater && automateFoodwaterExhaustion)) &&lib.getSetting(CONSTANTS.SETTINGS.AUTOMATE_EXHAUSTION)) {
 
       if (lib.getSetting(CONSTANTS.SETTINGS.LONG_REST_ARMOR_AUTOMATION) && lib.getSetting(CONSTANTS.SETTINGS.LONG_REST_ARMOR_EXHAUSTION) && actorExhaustion > 0) {
         const armor = this.actor.items.find(item => item.type === "equipment" && ["heavy", "medium"].indexOf(item.system?.type?.value) > -1 && item.system.equipped);
@@ -1232,6 +1274,9 @@ export default class RestWorkflow {
   }
 
   _displayRestResultMessage(chatMessage) {
+    if (!this.longRest && lib.determineMultiplier(CONSTANTS.SETTINGS.SHORT_HP_MULTIPLIER) && !this.healthData.hitDiceSpent && this.healthRegained > 0) {
+      chatMessage.content = game.i18n.format('REST-RECOVERY.Chat.AlternateShortRestResult', {name: this.actor.name, health: this.healthRegained});
+    }
     let flavor = chatMessage.flavor;
     if (!this.config.newDay) {
       let duration;
@@ -1247,6 +1292,8 @@ export default class RestWorkflow {
         units = duration > 1 ? 'Minutes' : 'Minute';
       }
       flavor = game.i18n.format(`REST-RECOVERY.Chat.Flavor.${this.longRest ? 'Long' : 'Short'}RestNormal`, {duration: duration, units: units});
+    } else if (!this.longRest) {
+      flavor = game.i18n.localize("REST-RECOVERY.Chat.Flavor.ShortRestNewday");
     }
 
     let extra = this.spellSlotsRegainedMessage
@@ -1262,7 +1309,7 @@ export default class RestWorkflow {
 
     let newChatMessageContent = `<p>${chatMessage.content}${this.hitDiceMessage ? " " + this.hitDiceMessage : ""}</p>` + extra;
 
-    if (lib.getSetting(CONSTANTS.SETTINGS.ENABLE_SIMPLE_CALENDAR_NOTES)) {
+    if (lib.getSetting(CONSTANTS.SETTINGS.ENABLE_SIMPLE_CALENDAR_NOTES) && (this.config.restPrompted || !lib.getSetting(CONSTANTS.SETTINGS.SIMPLE_CALENDAR_NOTES_ONLY_PROMPTED))) {
       let endDateTime = SimpleCalendar.api.currentDateTime();
       let restDuration = this.config.duration;
       let startDateTime = (this.config.restPrompted || this.config.advanceTime) ? SimpleCalendar.api.timestampToDate(SimpleCalendar.api.timestamp() - (restDuration * 60)) : endDateTime;
@@ -1285,13 +1332,7 @@ export default class RestWorkflow {
     const maxHP = this.actor.system.attributes.hp.max;
     const currentHP = this.actor.system.attributes.hp.value;
 
-    if (!this.longRest) {
-      results.hitPointsRecovered = currentHP - this.healthData.startingHealth;
-      results.hitPointsToRegainFromRest = 0;
-      return results.hitPointsToRegainFromRest;
-    }
-
-    const multiplier = lib.determineMultiplier(CONSTANTS.SETTINGS.HP_MULTIPLIER);
+    const multiplier = lib.determineMultiplier(this.longRest ? CONSTANTS.SETTINGS.HP_MULTIPLIER : CONSTANTS.SETTINGS.SHORT_HP_MULTIPLIER);
 
     results.hitPointsToRegainFromRest = typeof multiplier === "string"
       ? Math.floor((await lib.evaluateFormula(multiplier, this.actor.getRollData()))?.total)
@@ -1401,7 +1442,8 @@ export default class RestWorkflow {
 
   async _getRestSpellRecovery(results, { recoverSpells = true } = {}) {
 
-    const customSpellRecovery = lib.getSetting(CONSTANTS.SETTINGS.LONG_CUSTOM_SPELL_RECOVERY);
+    const customSpellRecovery = lib.getSetting(CONSTANTS.SETTINGS.LONG_CUSTOM_SPELL_RECOVERY) && this.config.dialog;
+    let actorRollData = this.actor.getRollData();
 
     // Long rest
     if (recoverSpells) {
@@ -1418,7 +1460,7 @@ export default class RestWorkflow {
         }
         let spellMax = slot.override || slot.max;
         let recoverSpells = typeof multiplier === "string"
-          ? Math.max((await lib.evaluateFormula(multiplier, { slot: foundry.utils.deepClone(slot) }))?.total, 1)
+          ? Math.max((await lib.evaluateFormula(multiplier, { ...actorRollData, slot: foundry.utils.deepClone(slot) }))?.total, 1)
           : Math.max(Math.floor(spellMax * multiplier), multiplier ? 1 : multiplier);
         results.updateData[`system.spells.${level}.value`] = Math.min(slot.value + recoverSpells, spellMax);
       }
@@ -1432,7 +1474,7 @@ export default class RestWorkflow {
         if (!slot.override && !slot.max || level !== "pact") continue;
         let spellMax = slot.override || slot.max;
         let recoverSpells = typeof pactMultiplier === "string"
-          ? Math.max((await lib.evaluateFormula(pactMultiplier, { slot: foundry.utils.deepClone(slot) }))?.total, 1)
+          ? Math.max((await lib.evaluateFormula(pactMultiplier, { ...actorRollData, slot: foundry.utils.deepClone(slot) }))?.total, 1)
           : Math.max(Math.floor(spellMax * pactMultiplier), pactMultiplier ? 1 : pactMultiplier);
         results.updateData[`system.spells.${level}.value`] = Math.min(slot.value + recoverSpells, spellMax);
       }
@@ -1585,7 +1627,11 @@ export default class RestWorkflow {
 
     if (!lib.getSetting(CONSTANTS.SETTINGS.ENABLE_FOOD_AND_WATER)) return;
 
-    if (!(this.longRest || this.restVariant === "gritty")) return;
+    if (lib.getSetting(CONSTANTS.SETTINGS.FOODWATER_PROMPT_NEWDAY)) {
+      if (!this.config.newDay) return;
+    } else if (!(this.longRest || this.restVariant === "gritty")) {
+      return;
+    }
 
     const {
       actorRequiredFood,

@@ -82,8 +82,8 @@
       "SpellSlotList": "{number} {level} level spell slot",
       "SpellSlotListPlural": "{number} {level} level spell slots",
       "RecoveryNameNum": "{name} regained {number} uses",
-      "SongOfRest": "{name} enjoys {bard}'s Song of Rest.",
-      "SongOfRestSelf": "{name} enjoys their own Song of Rest.",
+      "SongOfRest": "{name} enjoys {bard}'s {songOfRestName}.",
+      "SongOfRestSelf": "{name} enjoys their own {songOfRestName}.",
       "Chef": "{name} enjoys some delicious food from {chef}.",
       "ChefSelf": "{name} enjoys their own delicious food.",
       "ConsumedBothDayWorth": "{actorName} consumed {itemName} for a full day's worth of food and water.",
@@ -120,8 +120,10 @@
       "CouldNotShortRest": "{actorName} could not take a short rest.", 
       "Flavor": {
         "ShortRestNormal": "Short Rest ({duration} {units})",
-        "LongRestNormal": "Long Rest ({duration} {units})"
-      }
+        "LongRestNormal": "Long Rest ({duration} {units})",
+        "ShortRestNewday": "Short Rest (New Day)"
+      },
+      "AlternateShortRestResult": "{name} takes a short rest and recovers {health} Hit Points."
     },
     "Dialogs": {
       "SaveProfile": {
@@ -186,8 +188,8 @@
         "FinishRest": "Finish Short Rest"
       },
       "RestHealthWarning": {
-        "Title": "Finish Long Rest?",
-        "Content": "You haven't spent any hit dice to regain hit points, are you sure you want to finish your long rest?"
+        "Title": "Finish Rest?",
+        "Content": "You haven't spent any hit dice to regain hit points, are you sure you want to finish your rest?"
       },
       "RestSpendHitDice": {
         "Title": "Spend Hit Dice?",
@@ -390,6 +392,10 @@
           "Hint": "Enabling this will create a Simple Calendar note for each character's short/long rests, the content of which will be identical to the chat message outputted at the end of the rest.",
           "Hint2": "Note: Players must have \"Create Journal Entries\" permissions & \"Add Notes\" Simple Calendar permissions enabled if resting while online."
         },
+        "SimpleCalendarNotesOnlyPrompted": {
+          "Title": "Enable notes only on prompted rests",
+          "Hint": "Enabling this will create Simple Calendar notes only when a rest has been prompted by the GM."
+        },
         "HDRecoveryFraction": {
           "Title": "Hit Die roll multiplier",
           "Hint": "The fraction of a hit die roll to actually recover as hit points each time a hit die is rolled."
@@ -455,6 +461,10 @@
         "HalfWaterSaveDC": {
           "Title": "Half water exhaustion DC",
           "Hint": "This configures the Constitution saving throw DC that characters must make if they drink only half of the required amount of water."
+        },
+        "FoodWaterPromptNewDay": {
+          "Title": "Prompt food & water consumption on new day",
+          "Hint": "If enabled, food & water consumption will be requested only when a rest results in a \"new day\", regardless of whether it is short or long"
         }
       },
       "ShortRest": {
@@ -497,6 +507,10 @@
         "SongOfRestMultiuse": {
           "Title": "Song of Rest rolls for every hit die spent",
           "Hint": "Enabling this will allow Song of Rest to roll & add a bonus to every hit die rolled during a rest, rather than only the first."
+        },
+        "HitPointsRecoveryFraction": {
+          "Title": "Hit points recovery fraction",
+          "Hint": "The fraction of hit points to recover on a short rest (in addition to hit dice rolls)."
         }
       },
       "LongRest": {

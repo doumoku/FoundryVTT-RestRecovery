@@ -1,5 +1,41 @@
 # Rest Recovery Changelog
 
+## Version 1.15.1
+- Translation updates (thanks Kharmans)
+
+## Version 1.15.0
+- Added settings in food & water section to enable or disable food/water requirement according to "new day"
+  - If enabled, food & water consumption will be a rest step regardless of short vs long rest, so long as the rest results in a new day
+  - Note that if food & water _exhaustion_ is enabled along with this setting, normal exhaustion recovery will occur on long rests, but will also occur on short rests which span a new day (if all food/water required is consumed)
+- Use Custom Recovery checkbox & formula will now only show on items when relevant (uses set to short/long rest or "day")
+- Fixed a bug where playing with a non-english translation could cause food/water costs to be improperly calculated
+- Fixed a bug where actors with "default ownership" of owner wouldn't show up in the rest prompt
+
+## Version 1.14.1
+- Fixed a bug where regular exhaustion rules were applied still when Alternative Exhaustion 5e was active
+- Fixed a bug where Song of Rest wasn't being applied to players' actors unless the player also owned the bard
+- Fixed the chat message displayed for Song of Rest to properly use whatever the configured "Song of Rest" name is
+- Fixed a bug where rests called through a macro with `{dialog: false}` would not recover any resources
+  - Now such a rest will complete as if there were no food/water restrictions as no player input can be collected without a dialog
+  - Similarly, if "spell slot point-like recovery rule" is enabled and a no-dialog rest is prompted via macro, spell slots will be recovered according to the custom formula
+
+## Version 1.14.0
+- Added compatibility with [Magic Items](https://foundryvtt.com/packages/magicitems) module (resting should now recharge magic items as appropriate)
+  - This relies on Magic Items version 4.1.7 or later
+- Added an option to only log Simple Calendar notes if coming from a GM-prompted rest (i.e. not from a rest starting on a character sheet)
+- Fixed a bug with chat messages for hp regain on short rests displaying incorrect recovery amount
+
+## Version 1.13.0
+- Added option for hp regain on short rests (in addition to hit dice rolls)
+- A couple of dialog fixes
+
+## Version 1.12.2
+- "Configure Resource Recovery" option now only shows up on default sheet if sheet is in edit mode
+
+## Version 1.12.1
+- Translation updates (thanks Kharmans & VirusNik21)
+  - Now includes Russian translation
+
 ## Version 1.12.0
 - Added option to allow Song of Rest to roll with _every_ short rest hit die rolled, rather than only the first
 

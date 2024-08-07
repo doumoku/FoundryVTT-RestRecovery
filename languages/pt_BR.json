@@ -82,8 +82,8 @@
       "SpellSlotList": "{number} espaço de magia de {level}º círculo.",
       "SpellSlotListPlural": "{number} espaços de magia de {level}º círculo.",
       "RecoveryNameNum": "{name} recuperou {number} uso(s).",
-      "SongOfRest": "{name} desfruta a Canção do Descanso de {bard}.",
-      "SongOfRestSelf": "{name} desfruta de sua própria Canção de Descanso.",
+      "SongOfRest": "{name} desfruta a {songOfRestName} de {bard}.",
+      "SongOfRestSelf": "{name} desfruta de sua própria {songOfRestName}.",
       "Chef": "{name} desfruta de uma deliciosa comida de {chef}.",
       "ChefSelf": "{name} desfruta de sua própria deliciosa comida.",
       "ConsumedBothDayWorth": "{actorName} consumiu {itemName} para suprir um dia inteiro de comida e água.",
@@ -120,8 +120,10 @@
       "CouldNotShortRest": "{actorName} não pôde realizar um descanso curto.",
       "Flavor": {
         "ShortRestNormal": "Descanso Curto ({duration} {units})",
-        "LongRestNormal": "Descanso Longo ({duration} {units})"
-      }
+        "LongRestNormal": "Descanso Longo ({duration} {units})",
+        "ShortRestNewday": "Descanso Curto (Novo Dia)"
+      },
+      "AlternateShortRestResult": "{name} faz um descanso curto e recupera {health} Pontos de Vida."
     },
     "Dialogs": {
       "SaveProfile": {
@@ -390,6 +392,10 @@
           "Hint": "Ativar isso criará uma nota do Simple Calendar para cada descanso longo/curto dos jogadores. O conteúdo de cada nota será idêntico à mensagem de chat enviada no fim do descanso.",
           "Hint2": "Nota: Jogadores devem possuir as permissões \"Criar Diário\" e \"Adicionar Notas\" habilitadas no Simple Calendar se descansarem enquanto estiverem online."
         },
+        "SimpleCalendarNotesOnlyPrompted": {
+          "Title": "Habilitar Notas Apenas em Descansos Solicitados",
+          "Hint": "Ativar isso irá criar uma nota do Simple Calendar apenas quando o descanso for solicitado pelo MJ."
+        },
         "HDRecoveryFraction": {
           "Title": "Fração de Recuperação do Dado de Vida",
           "Hint": "A fração de um dado de vida que será realmente recuperada como pontos de vida cada vez que um dado de vida for rolado."
@@ -455,6 +461,10 @@
         "HalfWaterSaveDC": {
           "Title": "CD de Exaustão de Metade de Água",
           "Hint": "Configura a CD da salvaguarda de Constituição que os personagens devem fazer se beberem apenas metade da quantidade necessária de água."
+        },
+        "FoodWaterPromptNewDay": {
+          "Title": "Avisar Consumo de Comida e Água em Novo Dia",
+          "Hint": "Se habilitado, consumo de comida e água será requisitado apenas se o descanso resultar em um \"novo dia\", independente de ser um descanso curto ou longo."
         }
       },
       "ShortRest": {
@@ -497,6 +507,10 @@
         "SongOfRestMultiuse": {
           "Title": "Canção do Descanso em Cada Dado de Vida",
           "Hint": "Ativar isso permitirá que Canção do Descanso role e adicione um bônus a cada dado de vida rolado durante um descanso, em vez de apenas ao primeiro."
+        },
+        "HitPointsRecoveryFraction": {
+          "Title": "Fração de Recuperação de Pontos de Vida",
+          "Hint": "A fração de pontos de vida para recuperar em um descanso curto (em adição à rolagem de dados de vida)."
         }
       },
       "LongRest": {

@@ -28,6 +28,7 @@ const CONSTANTS = {
     ENABLE_PROMPT_REST_TIME_PASSING: "enable-prompt-rest-time-passing",
     ENABLE_SIMPLE_CALENDAR_INTEGRATION: "enable-simple-calendar-integration",
     ENABLE_SIMPLE_CALENDAR_NOTES: "enable-simple-calendar-notes",
+    SIMPLE_CALENDAR_NOTES_ONLY_PROMPTED: "simple-calendar-notes-only-prompted",
     PREVENT_USER_REST: "prevent-user-rest",
     PERIAPT_ROLL_MECHANICS: "periapt-roll-mechanics",
     HIT_DIE_ROLL_FORMULA: "hit-die-roll-formula",
@@ -46,12 +47,14 @@ const CONSTANTS = {
     SHORT_USES_FEATS_MULTIPLIER: "short-rest-recovery-uses-feats",
     SHORT_PACT_SPELLS_MULTIPLIER: "short-rest-recovery-pact-spells",
     SONG_OF_REST_MULTIUSE: "song-of-rest-multiuse",
+    SHORT_HP_MULTIPLIER: "short-recovery-hitpoints",
 
     MAX_HIT_DICE_SPEND_FORMULA: "max-hit-die-spend-formula",
     SHORT_RESOURCES_MULTIPLIER_FORMULA: "short-recovery-resources-formula",
     SHORT_USES_OTHERS_MULTIPLIER_FORMULA: "short-recovery-uses-others-formula",
     SHORT_USES_FEATS_MULTIPLIER_FORMULA: "short-recovery-uses-feats-formula",
     SHORT_PACT_SPELLS_MULTIPLIER_FORMULA: "short-recovery-pact-spells-formula",
+    SHORT_HP_MULTIPLIER_FORMULA: "short-recovery-hitpoints-formula",
 
     /*-------------------------------------------*
      *             Long Rest Settings            *
@@ -129,6 +132,7 @@ const CONSTANTS = {
     AUTOMATE_FOODWATER_EXHAUSTION: "automate-foodwater-exhaustion",
     NO_FOOD_DURATION_MODIFIER: "no-food-duration-modifier",
     HALF_WATER_SAVE_DC: "half-water-save-dc",
+    FOODWATER_PROMPT_NEWDAY: "foodwater-prompt-newday",
   },
   
   FRACTIONS: {
@@ -282,6 +286,20 @@ CONSTANTS.DEFAULT_SETTINGS = {
     moduleIntegration: { label: "Simple Calendar", key: "foundryvtt-simple-calendar" },
     validate: (settings) => {
       return !(settings.get(CONSTANTS.SETTINGS.ENABLE_SIMPLE_CALENDAR_INTEGRATION).value && game.modules.get("foundryvtt-simple-calendar")?.active);
+    },
+    config: false,
+    default: false,
+    type: Boolean
+  },
+  [CONSTANTS.SETTINGS.SIMPLE_CALENDAR_NOTES_ONLY_PROMPTED]: {
+    name: "REST-RECOVERY.Settings.General.SimpleCalendarNotesOnlyPrompted.Title",
+    hint: "REST-RECOVERY.Settings.General.SimpleCalendarNotesOnlyPrompted.Hint",
+    scope: "world",
+    group: "general",
+    dependsOn: [CONSTANTS.SETTINGS.ENABLE_SIMPLE_CALENDAR_INTEGRATION, CONSTANTS.SETTINGS.ENABLE_SIMPLE_CALENDAR_NOTES],
+    moduleIntegration: { label: "Simple Calendar", key: "foundryvtt-simple-calendar" },
+    validate: (settings) => {
+      return !(settings.get(CONSTANTS.SETTINGS.ENABLE_SIMPLE_CALENDAR_INTEGRATION).value && settings.get(CONSTANTS.SETTINGS.ENABLE_SIMPLE_CALENDAR_NOTES).value && game.modules.get("foundryvtt-simple-calendar")?.active);
     },
     config: false,
     default: false,
@@ -513,6 +531,32 @@ CONSTANTS.DEFAULT_SETTINGS = {
     config: false,
     type: Boolean,
     default: false
+  },
+  [CONSTANTS.SETTINGS.SHORT_HP_MULTIPLIER]: {
+    name: "REST-RECOVERY.Settings.ShortRest.HitPointsRecoveryFraction.Title",
+    hint: "REST-RECOVERY.Settings.ShortRest.HitPointsRecoveryFraction.Hint",
+    scope: "world",
+    group: "shortrest",
+    customSettingsDialog: true,
+    customFormula: CONSTANTS.SETTINGS.SHORT_HP_MULTIPLIER_FORMULA,
+    config: false,
+    type: String,
+    choices: {
+      [CONSTANTS.FRACTIONS.NONE]: "REST-RECOVERY.Fractions.None",
+      [CONSTANTS.FRACTIONS.QUARTER]: "REST-RECOVERY.Fractions.Quarter",
+      [CONSTANTS.FRACTIONS.HALF]: "REST-RECOVERY.Fractions.Half",
+      [CONSTANTS.FRACTIONS.FULL]: "REST-RECOVERY.Fractions.Full",
+      [CONSTANTS.FRACTIONS.CUSTOM]: "REST-RECOVERY.Fractions.Custom",
+    },
+    default: CONSTANTS.FRACTIONS.NONE,
+  },
+  [CONSTANTS.SETTINGS.SHORT_HP_MULTIPLIER_FORMULA]: {
+    scope: "world",
+    group: "shortrest",
+    config: false,
+    hidden: true,
+    type: String,
+    default: "floor(@attributes.hp.max / 2)",
   },
   
   /*-------------------------------------------*
@@ -1360,7 +1404,21 @@ CONSTANTS.DEFAULT_SETTINGS = {
     config: false,
     default: 15,
     type: Number
-  }
+  },
+  [CONSTANTS.SETTINGS.FOODWATER_PROMPT_NEWDAY]: {
+    name: "REST-RECOVERY.Settings.FoodAndWater.FoodWaterPromptNewDay.Title",
+    hint: "REST-RECOVERY.Settings.FoodAndWater.FoodWaterPromptNewDay.Hint",
+    scope: "world",
+    group: "foodandwater",
+    customSettingsDialog: true,
+    config: false,
+    type: Boolean,
+    dependsOn: [CONSTANTS.SETTINGS.ENABLE_FOOD_AND_WATER],
+    validate: (settings) => {
+      return !settings.get(CONSTANTS.SETTINGS.ENABLE_FOOD_AND_WATER).value
+    },
+    default: false
+  },
 };
 
 const baseFlag = `flags.${CONSTANTS.MODULE_NAME}.${CONSTANTS.FLAG_NAME}.`
