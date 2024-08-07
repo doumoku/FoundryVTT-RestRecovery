@@ -31,7 +31,7 @@
       "Name": "消耗 (One D&D)",
       "Description": "One D&D版の消耗により、クリーチャーは消耗の段階ごとにすべてのd20ロール（攻撃ロール、能力値判定、技能判定、セーヴィング・スロー）と呪文DCに-1のペナルティを累積して受けます。10段階の消耗に到達した時、クリーチャーは死亡します。"
     },
-    "PatchedRecovery": "{actorName}'s {recoveryName} has been patched.",
+    "PatchedRecovery": "{actorName}の{recoveryName}が修正された。",
     "PatchedConsumable": "Updated {itemName} with uses.",
     "Modules": {
       "DFreds": "DFreds Convenient Effects",
@@ -66,19 +66,19 @@
       "Both": "両方"
     },
     "NumberToText": {
-      "1": "One",
-      "2": "Two",
-      "3": "Three",
-      "4": "Four",
-      "5": "Five",
-      "1st": "1st",
-      "2nd": "2nd",
-      "3rd": "3rd",
-      "4th": "4th",
-      "5th": "5th"
+      "1": "1",
+      "2": "2",
+      "3": "3",
+      "4": "4",
+      "5": "5",
+      "1st": "1番目",
+      "2nd": "2番目",
+      "3rd": "3番目",
+      "4th": "4番目",
+      "5th": "5番目"
     },
     "Chat": {
-      "RegainedUses": "In addition, they recovered the following:",
+      "RegainedUses": "加えて、以下を回復した:",
       "SpellSlotList": "{number}つの{level}レベル呪文スロット",
       "SpellSlotListPlural": "{number}つの{level}レベル呪文スロット",
       "RecoveryNameNum": "{name}の使用回数を{number}回復",
@@ -125,10 +125,10 @@
     },
     "Dialogs": {
       "SaveProfile": {
-        "Title": "Create New Module Profile",
-        "Enter": "Enter preset name:",
-        "OverrideProfile": "Your new profile cannot have the same name as an old profile",
-        "Empty": "Your new profile cannot have an empty name"
+        "Title": "MODプロファイル新規作成",
+        "Enter": "プリセット名を入力:",
+        "OverrideProfile": "新規プロファイルに過去のものと同じ名前はつけられません",
+        "Empty": "新規プロファイル名が空白です"
       },
       "DiscardChanges": {
         "Title": "保存されていない変更",
@@ -156,18 +156,18 @@
         }
       },
       "PromptRest": {
-        "Title": "Prompt Rest For Players",
+        "Title": "プレイヤーに休憩を通知",
         "ConfigureProfiles": "Configure Profiles",
         "Short": "小休憩",
         "Long": "大休憩",
-        "NewDayTitle": "New Day",
-        "NoNewDayTitle": "Not A New Day",
+        "NewDayTitle": "新たな一日",
+        "NoNewDayTitle": "新たな一日ではない",
         "NewDayHint": "This causes characters who finish the rest to recover abilities that recharge on a \"per day\" basis.",
         "NewDaySimpleCalendarHint": "Based on the type selected below, characters who finish the rest to recover abilities that recharge on a \"per day\" basis. This is driven by the <strong>Simple Calendar</strong> module.",
         "NoNewDaySimpleCalendarHint": "Neither long nor a short rest would result in a new day, so characters who finish either will <strong>not</strong> recovery abilities that recharge on a \"per day\" basis. This is driven by the <strong>Simple Calendar</strong> module.",
         "NewDay": "(new day)",
-        "Submit": "Submit",
-        "PlayerListShort": "Rest",
+        "Submit": "投稿",
+        "PlayerListShort": "休憩",
         "PlayerListFull": "Prompt Rest",
         "PromptCharactersRest": "Player characters to prompt rests for",
         "RestProfile": "Rest Profile"
