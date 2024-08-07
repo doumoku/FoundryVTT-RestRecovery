@@ -96,13 +96,13 @@
       "RequiredSatedWater": "１日分満腹になるまで{units}単位の水分が必要だ。",
       "SatedFood": "これ以上の食事は必要ない。",
       "SatedWater": "これ以上の水分は必要ない。",
-      "FoodFullNone": "They ate enough of their own food to be sated.",
+      "FoodFullNone": "満足するまで自分の食料を十分食べた。",
       "FoodHalfNone": "They ate of their own food, but only half of the amount that they needed.",
       "FoodHalfHalf": "They ate from an external source and of their own food to be sated.",
       "FoodNoneFull": "They ate enough food from an external source to be sated.",
       "FoodNoneHalf": "They ate from an external source, but only half of the amount that they needed.",
       "FoodNoneNone": "何も食べなかった。",
-      "WaterFullNone": "They drank enough of their own water to be sated.",
+      "WaterFullNone": "満足するまで自分の水分を十分飲んだ。",
       "WaterHalfNone": "They drank of their own water, but only half of the amount that they needed.",
       "WaterHalfHalf": "They drank from an external source and of their own water to be sated.",
       "WaterNoneFull": "They drank enough water from an external source to be sated.",
@@ -143,7 +143,7 @@
         "Content": "Are you sure you want to delete the \"{profile}\" module profile?"
       },
       "QuickSetup": {
-        "Title": "Rest Recovery: Quick Setup",
+        "Title": "休憩回復: クイック設定",
         "SlowNaturalHealingTitle": "Slow Natural Healing",
         "SlowNaturalHealingLabel": "Characters do not regain hit points at the end of a long rest. Instead, they must spend hit dice to heal, like a short rest.",
         "RecoverHitDiceTitle": "Recover Hit Dice Before Long Rest",
@@ -186,20 +186,20 @@
         "FinishRest": "Finish Short Rest"
       },
       "RestHealthWarning": {
-        "Title": "Finish Long Rest?",
+        "Title": "大休憩を終了する？",
         "Content": "You haven't spent any hit dice to regain hit points, are you sure you want to finish your long rest?"
       },
       "RestSpendHitDice": {
-        "Title": "Spend Hit Dice?",
+        "Title": "ヒット・ダイスを消費する？",
         "Content": "You need to spend at least {num_dice} hit dice to finish this rest. Are you sure you want to do this?"
       },
       "RestNoHitDice": {
-        "Title": "No remaining hit dice",
+        "Title": "ヒット・ダイスが無い",
         "Content": "You need to spend at least {num_dice} hit dice to finish this rest, but you do not have any left."
       },
       "LongRest": {
-        "ForcedNewDayTitle": "New Day",
-        "ForcedNewDayHint": "A new day dawns, so this long rest will recover abilities that recharge on a \"per day\" basis.",
+        "ForcedNewDayTitle": "新たな一日",
+        "ForcedNewDayHint": "夜明けを迎えたので、この大休憩により \"一日\" で再チャージされる能力を回復する。",
         "Begin": "Begin Long Rest",
         "BeginExplanation": "By beginning your long rest, you will regain some of your hit dice so that you can roll them to regain hit points.",
         "CustomRules": "You are playing with custom rules, which means that you may regain hit points, hit dice, class resources, limited use item charges, and spell slots differently.",
