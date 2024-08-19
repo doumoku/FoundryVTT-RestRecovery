@@ -339,7 +339,7 @@
         "Hint": "A simpler UI for quickly setting up common settings for rests."
       },
       "Configure": {
-        "Title": "Module Configuration",
+        "Title": "MOD設定",
         "Label": "Configure Rest",
         "Hint": "You can configure how rests work in this dialog."
       },
@@ -352,7 +352,7 @@
         "Hint": "Configures whether the prompt rest button is shown below the players in the bottom-left player list (requires refresh)"
       },
       "Debug": {
-        "Title": "Enable debugging",
+        "Title": "デバッグ有効化",
         "Label": "Prints debug messages to the console"
       },
       "RequiresModule": "Requires {module_name}",
@@ -459,7 +459,7 @@
       },
       "ShortRest": {
         "IgnoreInactive": {
-          "Title": "Ignore inactive player characters",
+          "Title": "非アクティブなPCを無視",
           "Hint": "If you have a Bard with the Song of Rest or a Chef in your party, this will only consider them as present if the owning player is active and logged on."
         },
         "MaxShortRests": {
@@ -592,15 +592,15 @@
       },
       "ItemNames": {
         "WizardClassName": {
-          "Title": "Wizard class name",
+          "Title": "ウィザード・クラス名",
           "Hint": "Here you can configure what the Wizard class is called in your game. This can be a localized string."
         },
         "DruidClassName": {
-          "Title": "Druid class name",
+          "Title": "ドルイド・クラス名",
           "Hint": "Here you can configure what the Druid class is called in your game. This can be a localized string."
         },
         "BardClassName": {
-          "Title": "Bard class name",
+          "Title": "バード・クラス名",
           "Hint": "Here you can configure what the Bard class is called in your game. This is used to determine who's Song of Rest to use. This can be a localized string."
         },
         "ArcaneRecovery": {
