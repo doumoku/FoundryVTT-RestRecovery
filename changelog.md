@@ -1,5 +1,19 @@
 # Rest Recovery Changelog
 
+## Version 1.16.2
+- Fixed bug where Rest Recovery would try to access Tidy5e's settings before they were registered
+- Fixed a bug where rolling hit dice on long rest wouldn't update the UI
+- Translation updates (thanks Kharmans)
+
+## Version 1.16.1
+- Fixed bug where Tidy5e sheet would be adjusted even if exhaustion automation was disabled in Rest Recovery
+
+## Version 1.16.0
+- Added a special trait for actors to roll hit dice with advantage
+- Added a whispered chat message to the GM if Rest Recovery changes Tidy5e's exhaustion display settings
+- Added an API function which might be useful for programmatically handling food/water consumption
+- Added a system version max of "4" to prevent activation on dnd5e 4.0.0 when it releases, as Rest Recovery almost certainly won't be immediately compatible
+
 ## Version 1.15.1
 - Translation updates (thanks Kharmans)
 
