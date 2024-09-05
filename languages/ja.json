@@ -11,7 +11,7 @@
     "Warnings": {
       "PreventedLongRest": "君は妨害する効果の影響下にあるため、大休憩を行えない！",
       "PreventedShortRest": "君は妨害する効果の影響下にあるため、小休憩を行えない！",
-      "NotPromptedLongRest": "The GM has configured this game so you cannot start a long rest without being prompted!",
+      "NotPromptedLongRest": "GMによりこのゲームはconfigured this game so you cannot start a long rest without being prompted!",
       "NotPromptedShortRest": "The GM has configured this game so you cannot start a short rest without being prompted!",
       "ItemNoUses": "「{item}」は使用回数が無く、君は食べることができなかった。"
     },
